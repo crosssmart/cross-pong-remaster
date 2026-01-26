@@ -1,0 +1,100 @@
+[gd_scene load_steps=11 format=3 uid="uid://dqe3v8dp32snu"]
+
+[ext_resource type="PackedScene" uid="uid://s3c8eg1tmd04" path="res://Scenes/player1.tscn" id="1_ebmjs"]
+[ext_resource type="Script" uid="uid://idvnb2ta1g16" path="res://Scripts/gameHandler.gd" id="1_wowpa"]
+[ext_resource type="Texture2D" uid="uid://d3cr2vtwtcer" path="res://Assets/bgs/parallax_03.png" id="2_h4fw4"]
+[ext_resource type="PackedScene" uid="uid://dmsisfk8sbr5w" path="res://Scenes/player2.tscn" id="2_qxrlw"]
+[ext_resource type="Texture2D" uid="uid://du8awrrsjnngf" path="res://Assets/bgs/parallax_02.png" id="2_v158k"]
+[ext_resource type="PackedScene" uid="uid://dvg838xku4tgp" path="res://Scenes/ball.tscn" id="4_3dryh"]
+[ext_resource type="Texture2D" uid="uid://by6plw6najsdy" path="res://Assets/bgs/parallax_00.png" id="5_wowpa"]
+[ext_resource type="Texture2D" uid="uid://uxknxnfmhvnh" path="res://Assets/bgs/bg1_alt.png" id="6_h4fw4"]
+[ext_resource type="Texture2D" uid="uid://cuy3nkp2xy08y" path="res://Assets/bgs/parallax_01.png" id="6_i6g32"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1l0tm"]
+font_size = 50
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_wowpa")
+
+[node name="bg" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BG" type="Control" parent="bg"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Layer10" type="Sprite2D" parent="bg/BG"]
+visible = false
+z_index = -5
+position = Vector2(0, -16.999998)
+scale = Vector2(2.5148065, 2.5148063)
+texture = ExtResource("2_h4fw4")
+centered = false
+
+[node name="Layer00" type="Parallax2D" parent="bg/BG"]
+visible = false
+z_index = -2
+scroll_offset = Vector2(166, 0)
+repeat_size = Vector2(1985, 0)
+autoscroll = Vector2(25, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="bg/BG/Layer00"]
+z_index = -1
+position = Vector2(-666, -392)
+scale = Vector2(0.9555302, 0.9652344)
+texture = ExtResource("2_v158k")
+centered = false
+
+[node name="Layer01" type="Parallax2D" parent="bg/BG"]
+visible = false
+z_index = -1
+scroll_offset = Vector2(-9, 0)
+repeat_size = Vector2(1985, 0)
+autoscroll = Vector2(50, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="bg/BG/Layer01"]
+z_index = -1
+position = Vector2(-666, -392)
+scale = Vector2(0.9555302, 0.9652344)
+texture = ExtResource("5_wowpa")
+centered = false
+
+[node name="Layer02" type="Sprite2D" parent="bg/BG"]
+visible = false
+z_index = -1
+position = Vector2(-3, 0)
+texture = ExtResource("6_i6g32")
+centered = false
+
+[node name="bg" type="Sprite2D" parent="bg/BG"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_h4fw4")
+centered = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="player1" parent="." instance=ExtResource("1_ebmjs")]
+position = Vector2(100, 540)
+
+[node name="player2" parent="." instance=ExtResource("2_qxrlw")]
+position = Vector2(1820, 540)
+
+[node name="ball" parent="." instance=ExtResource("4_3dryh")]
+position = Vector2(960, 540)
+
+[node name="speedText" type="Label" parent="."]
+offset_left = 960.0
+offset_top = 71.0
+offset_right = 1059.0
+offset_bottom = 140.0
+text = "00.0"
+label_settings = SubResource("LabelSettings_1l0tm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="ball" to="." method="_on_ball_body_entered"]

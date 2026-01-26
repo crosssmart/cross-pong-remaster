@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://b50oxb2bvcxtk"]
+
+[ext_resource type="Script" uid="uid://bawtcyhxqm1hk" path="res://Scripts/Test/testing_gamehandler.gd" id="1_8ge65"]
+[ext_resource type="PackedScene" uid="uid://bt6pt16lgqxeb" path="res://Scenes/UI/pause.tscn" id="1_vewcs"]
+[ext_resource type="PackedScene" uid="uid://dn2dsrk7fopxj" path="res://Scenes/UI/Test/test_lobby_ui.tscn" id="3_o3544"]
+[ext_resource type="PackedScene" uid="uid://r86y4s7akium" path="res://Scenes/UI/Test/test_Score.tscn" id="4_efgn6"]
+[ext_resource type="Texture2D" uid="uid://bhtjtxna84u4v" path="res://Assets/bgs/bgTeste2.png" id="5_efgn6"]
+
+[node name="Testing" type="Node2D"]
+script = ExtResource("1_8ge65")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -4
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+texture = ExtResource("5_efgn6")
+centered = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="TestScore" parent="Camera2D" instance=ExtResource("4_efgn6")]
+visible = false
+
+[node name="TestLobbyUi" parent="Camera2D" instance=ExtResource("3_o3544")]
+visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Control_Pause" type="Control" parent="Camera2D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Pause" parent="Camera2D/Control_Pause" instance=ExtResource("1_vewcs")]
+process_mode = 2
+visible = false
+top_level = true
+z_index = 5
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1

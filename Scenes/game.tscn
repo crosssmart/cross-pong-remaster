@@ -1,20 +1,102 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqe3v8dp32snu"]
+[gd_scene load_steps=11 format=3 uid="uid://dqe3v8dp32snu"]
 
-[ext_resource type="PackedScene" uid="uid://s3c8eg1tmd04" path="res://Scenes/player1.tscn" id="1_ebmjs"]
+[ext_resource type="PackedScene" uid="uid://s3c8eg1tmd04" path="res://Scenes/Objects/player1.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://idvnb2ta1g16" path="res://Scripts/gameHandler.gd" id="1_wowpa"]
-[ext_resource type="PackedScene" uid="uid://dmsisfk8sbr5w" path="res://Scenes/player2.tscn" id="2_qxrlw"]
-[ext_resource type="Texture2D" uid="uid://b6vxe2y7kum6" path="res://Assets/bg1.png" id="3_3dryh"]
-[ext_resource type="PackedScene" uid="uid://dvg838xku4tgp" path="res://Scenes/ball.tscn" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://bt6pt16lgqxeb" path="res://Scenes/UI/pause.tscn" id="2_i6g32"]
+[ext_resource type="PackedScene" uid="uid://dmsisfk8sbr5w" path="res://Scenes/Objects/player2.tscn" id="2_qxrlw"]
+[ext_resource type="Texture2D" uid="uid://bhtjtxna84u4v" path="res://Assets/bgs/bgTeste2.png" id="2_wowpa"]
+[ext_resource type="PackedScene" uid="uid://dvg838xku4tgp" path="res://Scenes/Objects/ball.tscn" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://bg4fbg6e3ehk1" path="res://Scenes/Objects/winArea.tscn" id="7_1l0tm"]
+
+[sub_resource type="Theme" id="Theme_v158k"]
+default_font_size = 70
+
+[sub_resource type="Theme" id="Theme_1l0tm"]
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_wowpa"]
+default_font_size = 40
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_wowpa")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+z_index = 3
 anchor_mode = 0
 
-[node name="bg" type="Sprite2D" parent="."]
-z_index = -940
-texture = ExtResource("3_3dryh")
+[node name="UI" type="Control" parent="Camera2D"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="speedText" type="RichTextLabel" parent="Camera2D/UI"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -125.0
+offset_right = 125.0
+offset_bottom = 96.0
+grow_horizontal = 2
+theme = SubResource("Theme_v158k")
+bbcode_enabled = true
+text = "00"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P2_Points" type="RichTextLabel" parent="Camera2D/UI"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -250.0
+offset_bottom = 55.0
+grow_horizontal = 0
+theme = SubResource("Theme_1l0tm")
+bbcode_enabled = true
+text = "0"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P1_Points" type="RichTextLabel" parent="Camera2D/UI"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 1
+offset_right = 250.0
+offset_bottom = 55.0
+theme = SubResource("Theme_wowpa")
+bbcode_enabled = true
+text = "0"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pause" parent="Camera2D/UI" instance=ExtResource("2_i6g32")]
+visible = false
+top_level = true
+z_index = 7
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="bg2" type="Sprite2D" parent="."]
+z_index = -2
+texture = ExtResource("2_wowpa")
 centered = false
 
 [node name="player1" parent="." instance=ExtResource("1_ebmjs")]
@@ -23,7 +105,15 @@ position = Vector2(100, 540)
 [node name="player2" parent="." instance=ExtResource("2_qxrlw")]
 position = Vector2(1820, 540)
 
-[node name="ball" parent="." instance=ExtResource("4_3dryh")]
+[node name="ball" parent="." groups=["Ball"] instance=ExtResource("4_3dryh")]
 position = Vector2(960, 540)
+min_ball_speed = 300
 
-[connection signal="body_entered" from="ball" to="." method="_on_ball_body_entered"]
+[node name="WinArea_P2" parent="." instance=ExtResource("7_1l0tm")]
+position = Vector2(-101, 540)
+
+[node name="WinArea_P1" parent="." instance=ExtResource("7_1l0tm")]
+position = Vector2(2016, 540)
+
+[connection signal="area_entered" from="WinArea_P2" to="." method="_on_win_area_p_2_area_entered"]
+[connection signal="area_entered" from="WinArea_P1" to="." method="_on_win_area_p_1_area_entered"]

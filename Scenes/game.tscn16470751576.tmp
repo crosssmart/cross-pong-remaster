@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://dqe3v8dp32snu"]
+
+[ext_resource type="PackedScene" uid="uid://s3c8eg1tmd04" path="res://Scenes/player1.tscn" id="1_ebmjs"]
+[ext_resource type="Script" uid="uid://idvnb2ta1g16" path="res://Scripts/gameHandler.gd" id="1_wowpa"]
+[ext_resource type="PackedScene" uid="uid://dmsisfk8sbr5w" path="res://Scenes/player2.tscn" id="2_qxrlw"]
+[ext_resource type="PackedScene" uid="uid://dvg838xku4tgp" path="res://Scenes/ball.tscn" id="4_3dryh"]
+[ext_resource type="Texture2D" uid="uid://dmcb2pecea5dt" path="res://Assets/bgs/bg1.png" id="5_1l0tm"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1l0tm"]
+font_size = 50
+font_color = Color(0, 0, 0, 1)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_wowpa")
+
+[node name="bg2" type="Sprite2D" parent="."]
+texture = ExtResource("5_1l0tm")
+centered = false
+
+[node name="speedText" type="Label" parent="."]
+offset_left = 936.0
+offset_top = 21.0
+offset_right = 1035.0
+offset_bottom = 90.0
+text = "00.0"
+label_settings = SubResource("LabelSettings_1l0tm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="player1" parent="." instance=ExtResource("1_ebmjs")]
+position = Vector2(100, 540)
+
+[node name="player2" parent="." instance=ExtResource("2_qxrlw")]
+position = Vector2(1820, 540)
+
+[node name="ball" parent="." instance=ExtResource("4_3dryh")]
+position = Vector2(960, 540)
+
+[connection signal="body_entered" from="ball" to="." method="_on_ball_body_entered"]
