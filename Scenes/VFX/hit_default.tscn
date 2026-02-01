@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://brghtxw5u2dqk"]
+
+[ext_resource type="Texture2D" uid="uid://who0vnieo56c" path="res://Assets/vfx/Hit-Yellow.png" id="1_6djk5"]
+[ext_resource type="Script" uid="uid://bh7s06fo3y1ro" path="res://Scripts/UI/vfx.gd" id="2_o3uyx"]
+
+[sub_resource type="Animation" id="Animation_6djk5"]
+resource_name = "hit"
+length = 0.55
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.044482846, 0.09166667, 0.14166667, 0.19166666, 0.24166666, 0.289681, 0.33524877, 0.38298646, 0.4296392, 0.475, 0.51666665),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1), Vector2i(1, 2), Vector2i(2, 2), Vector2i(3, 2), Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_o3uyx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d1v8h"]
+_data = {
+&"RESET": SubResource("Animation_o3uyx"),
+&"hit": SubResource("Animation_6djk5")
+}
+
+[node name="hit_default" type="Sprite2D"]
+top_level = true
+z_index = 2
+scale = Vector2(0.32617188, 0.32617188)
+texture = ExtResource("1_6djk5")
+hframes = 4
+vframes = 4
+script = ExtResource("2_o3uyx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_d1v8h")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

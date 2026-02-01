@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4sn0v10fg2ve"]
+
+[sub_resource type="Curve" id="Curve_juvrv"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9819005, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_juvrv"]
+colors = PackedColorArray(1, 1, 0.39215687, 1, 1, 1, 1, 0.14509805)
+
+[sub_resource type="GDScript" id="GDScript_juvrv"]
+script/source = "extends Line2D
+
+class_name Trails
+
+func _ready() -> void:
+	self.show()
+
+
+var queue: Array
+@export var MAX_POINTS : int 
+
+func _process(_delta: float) -> void:
+	var pos = _get_position()
+	
+	queue.push_front(pos)
+	
+	if queue.size() > MAX_POINTS:
+		queue.pop_back()
+		
+	clear_points()
+
+	for point in queue:
+		add_point(point)
+		
+func _get_position():
+	return get_parent().position
+"
+
+[node name="Line2D" type="Line2D"]
+visible = false
+top_level = true
+z_index = -2
+points = PackedVector2Array(45, 39, 222, 105)
+width = 40.0
+width_curve = SubResource("Curve_juvrv")
+gradient = SubResource("Gradient_juvrv")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+script = SubResource("GDScript_juvrv")
+MAX_POINTS = 30
